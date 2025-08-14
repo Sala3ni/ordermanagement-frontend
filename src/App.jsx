@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import OrdersTable from "./OrdersTable";
 import "./index.css";
 
+// Directly set deployed backend URL here
+const API_BASE_URL = "https://ordermanagement-backend-seven.vercel.app";
+
 function App() {
   const [orders, setOrders] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
@@ -9,7 +12,7 @@ function App() {
   const limit = 8;
 
   const fetchOrders = () => {
-    fetch(`http://localhost:5000/orders?status=${statusFilter}&page=${page}&limit=${limit}`)
+    fetch(`${API_BASE_URL}/orders?status=${statusFilter}&page=${page}&limit=${limit}`)
       .then(res => res.json())
       .then(data => {
         if (data && Array.isArray(data.data)) {
@@ -28,7 +31,7 @@ function App() {
 
     if (!updatedName || !updatedProduct || !updatedPrice) return;
 
-    fetch(`http://localhost:5000/orders/${order._id}`, {
+    fetch(`${API_BASE_URL}/orders/${order._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -44,7 +47,7 @@ function App() {
       .then(res => res.json())
       .then(() => {
         alert("Order updated successfully");
-        window.location.reload();
+        fetchOrders(); // refresh table without page reload
       })
       .catch(err => console.error(err));
   };
@@ -79,4 +82,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;

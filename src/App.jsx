@@ -3,7 +3,7 @@ import OrdersTable from "./OrdersTable";
 import "./index.css";
 
 // Directly set deployed backend URL here
-const API_BASE_URL = "https://ordermanagement-backend-j2clqi5cr-saloni-mishras-projects.vercel.app";
+const API_BASE_URL = "https://ordermanagement-backend-seven.vercel.app";
 
 function App() {
   const [orders, setOrders] = useState([]);

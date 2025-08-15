@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import OrdersTable from "./OrdersTable";
 import "./index.css";
 
-// Directly set deployed backend URL here
-const API_BASE_URL = "https://ordermanagement-backend-seven.vercel.app";
+// Automatically use local backend in dev, deployed backend in prod
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || // Vite env variable
+  (import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://ordermanagement-backend-dal2.vercel.app");
 
 function App() {
   const [orders, setOrders] = useState([]);
@@ -12,9 +16,10 @@ function App() {
   const limit = 8;
 
   const fetchOrders = () => {
-    fetch(`${API_BASE_URL}/orders?status=${statusFilter}&page=${page}&limit=${limit}`)
+    fetch(`${API_BASE_URL}/orders?status=${statusFilter || ""}&page=${page}&limit=${limit}`)
       .then(res => res.json())
       .then(data => {
+        console.log("Fetched orders:", data); // Debug log
         if (data && Array.isArray(data.data)) {
           setOrders(data.data);
         } else {
@@ -47,7 +52,7 @@ function App() {
       .then(res => res.json())
       .then(() => {
         alert("Order updated successfully");
-        fetchOrders(); // refresh table without page reload
+        fetchOrders();
       })
       .catch(err => console.error(err));
   };

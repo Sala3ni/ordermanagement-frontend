@@ -7,7 +7,10 @@ function OrdersTable({ orders = [], fetchOrders, handleUpdate }) {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       try {
-        await axios.delete(`http://localhost:5000/orders/${id}`);
+        const API_BASE_URL = import.meta.env.MODE === "development" 
+          ? "http://localhost:5000" 
+          : "https://ordermanagement-backend-dal2.vercel.app";
+        await axios.delete(`${API_BASE_URL}/orders/${id}`);
         fetchOrders(); // refresh list
       } catch (error) {
         console.error("Error deleting order:", error);

@@ -7,7 +7,7 @@ const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || // Vite env variable
   (import.meta.env.MODE === "development"
     ? "http://localhost:5000"
-    : "https://ordermanagement-backend-dal2.vercel.app");
+    : "https://ordermanagement-backend-a82l71vqz-saloni-mishras-projects.vercel.app");
 
 function App() {
   const [orders, setOrders] = useState([]);
